@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const apiGatewayController = require('../controllers/apiGatewayController');
+const { authenticateToken, authorizeRole } = require('../middlewares/auth');
 
 /**
  * @swagger
@@ -113,7 +114,7 @@ router.post('/', apiGatewayController.createPet);
  *             schema:
  *               type: object
  */
-router.post('/adopt', apiGatewayController.adoptPet); 
+router.post('/adopt',apiGatewayController.adoptPet); 
 
 /**
  * @swagger

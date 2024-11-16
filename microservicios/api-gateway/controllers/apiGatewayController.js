@@ -45,7 +45,7 @@ module.exports = {
     const { username, password } = req.body;
     
     callUserService('POST', '/users/login', { username, password })
-      .then((response) => res.status(200).json({ token: response.data.token }))
+      .then((response) => res.status(200).json({ token: response.data.token, user: { username: username, role: role } }))
       .catch((error) => res.status(401).json({ error: 'Invalid credentials' }));
   },
 
@@ -83,6 +83,7 @@ module.exports = {
   // Create a new pet
   createPet: (req, res) => {
     const petData = req.body; // Data for the new pet
+    console.log({petData})
     callPetService('POST', '', petData)
       .then((response) => res.status(201).json(response.data))
       .catch((error) => res.status(500).json({ error: 'Unable to create pet' }));

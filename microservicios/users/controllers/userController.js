@@ -8,6 +8,7 @@ const registerUser = (req, res) => {
   const { username, password } = req.body;
   const users = getUsers();
 
+  console.log("req",req.body)
  
   if (users.some(user => user.username === username)) {
     return res.status(400).json({ message: 'Usuario ya existe' });

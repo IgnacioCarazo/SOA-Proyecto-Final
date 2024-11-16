@@ -23,9 +23,11 @@ const adoptPet = (petId, userId) => {
   if (pet.adopted) {
     return { error: 'Pet already adopted' };
   }
+  if (pet.userId === ""){
+    return { error: 'You are either not logged in or your user cannot adopt a pet' };
+
+  }
   
-  pet.userId = userId;
-  pet.adopted = true;
   savePets(pets);
   
   return { pet };

@@ -1,6 +1,7 @@
 const express = require('express');
 const petController = require('../controllers/petController');
 const router = express.Router();
+const { authenticateToken, authorizeRole } = require('../middlewares/auth');
 
 
 /**
@@ -47,7 +48,7 @@ const router = express.Router();
  *                     format: date-time
  */
 
-router.get('/user/:userId', petController.getPetsByUserId);
+router.get('/user/:userId', authenticateToken, petController.getPetsByUserId);
 
 /**
  * @swagger
@@ -86,7 +87,7 @@ router.get('/user/:userId', petController.getPetsByUserId);
  *                     format: date-time
  */
 
-router.get('/', petController.getPets); 
+router.get('/', authenticateToken,  petController.getPets); 
 
 /**
  * @swagger
@@ -157,7 +158,7 @@ router.get('/', petController.getPets);
  *       403:
  *         description: Forbidden - User does not have the required role
  */
-router.post('/', petController.createPet);
+router.post('/',authorizeRole('admin'), authenticateToken,  petController.createPet);
 
 /**
  * @swagger
@@ -210,7 +211,7 @@ router.post('/', petController.createPet);
  *                       format: date-time
  */
 
-router.post('/adopt', petController.adoptPet); 
+router.post('/adopt', authenticateToken, petController.adoptPet); 
 
 /**
  * @swagger
@@ -261,7 +262,7 @@ router.post('/adopt', petController.adoptPet);
  *                       format: date-time
  */
 
-router.post('/unadopt', petController.unadoptPet); 
+router.post('/unadopt', authenticateToken, petController.unadoptPet); 
 
 /**
  * @swagger
@@ -339,6 +340,6 @@ router.post('/unadopt', petController.unadoptPet);
  *         description: Pet not found
  */
 
-router.patch('/:id', petController.updatePet); 
+router.patch('/:id', authenticateToken, petController.updatePet); 
 
 module.exports = router;
